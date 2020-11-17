@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='itu_event.css')}}"/>
+  </head>
+  <body>
+      <div>
+        <ul>
+          <li><a href="{{url_for('search_events_page')}}">Etkinlik Ara</a></li>
+          <li><a href="{{url_for('attended_events_page')}}">Katıldıklarım</a></li>
+          <li><a href="{{url_for('profile_page')}}">Profil</a></li>
+        </ul>
+      </div>
+      
+      <div>
+        {% block content %}{% endblock %}
+      </div>
+  </body>
+</html>
