@@ -18,10 +18,10 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="{{ url_for('search_events_page') }}">Search Event<span class="sr-only">(current)</span></a>
+          <li class="nav-item {% if request.path==url_for('search_events_page') %} active {% endif %}">
+            <a class="nav-link" href="{{ url_for('search_events_page') }}">Search Event</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item {% if request.path==url_for('attended_events_page') %} active {% endif %}">
             <a class="nav-link" href="{{ url_for('attended_events_page') }}">Schedule</a>
           </li>
           <!--
@@ -44,7 +44,7 @@
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
 
-        <img src="static/profile_icon.svg" style="width:40px;height:40px;margin-left:10px;margin-right:10px;">
+        <img src="static/profile_icon.svg" style="width:30px;height:30px;margin-left:10px;margin-right:10px;">
 
 
       </div>

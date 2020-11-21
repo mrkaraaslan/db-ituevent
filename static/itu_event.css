@@ -1,11 +1,12 @@
-h1 {
-  color: #f88b07;
-}
-
 .f {
   padding-top: 2cm;
 }
 
 .mybg {
+  color: #fff;
   background-color: indigo;
+}
+
+.myfg {
+  color: indigo;
 }

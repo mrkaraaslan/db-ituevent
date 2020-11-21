@@ -1,8 +1,8 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-@app.route("/sign_in")
+@app.route("/")
 def sign_in_page():
     return render_template("Sign/sign_in.html")
 
@@ -14,7 +14,7 @@ def sign_up_page():
 def forgot_password_page():
     return render_template("Sign/forgot_password.html")
 
-@app.route("/")
+@app.route("/search_events")
 def search_events_page():
     return render_template("App/search_events.html")
 
