@@ -1,30 +1,20 @@
 from flask import Flask, render_template, request
 
-app = Flask(__name__)
+import pages
 
-@app.route("/")
-def sign_in_page():
-    return render_template("Sign/sign_in.html")
+def create_app():
+    app = Flask(__name__)
 
-@app.route("/sign_up")
-def sign_up_page():
-    return render_template("Sign/sign_up.html")
+    app.add_url_rule("/sign_in", view_func=pages.sign_in_page)
+    app.add_url_rule("/sign_up", view_func=pages.sign_up_page)
+    app.add_url_rule("/forgot_password", view_func=pages.forgot_password_page)
 
-@app.route("/forgot_password")
-def forgot_password_page():
-    return render_template("Sign/forgot_password.html")
+    app.add_url_rule("/", view_func=pages.search_events_page)
+    app.add_url_rule("/attended_events", view_func=pages.attended_events_page)
+    app.add_url_rule("/profile", view_func=pages.profile_page)
 
-@app.route("/search_events")
-def search_events_page():
-    return render_template("App/search_events.html")
-
-@app.route("/attended_events")
-def attended_events_page():
-    return render_template("App/attended_events.html")
-
-@app.route("/profile")
-def profile_page():
-    return render_template("App/profile.html")
+    return app
 
 if __name__ == "__main__":
+    app = create_app()
     app.run(host="0.0.0.0", port=8080, debug=True)

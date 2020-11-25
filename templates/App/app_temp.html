@@ -28,22 +28,27 @@
           <li class="nav-item">
             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
           </li>
-          
-          <li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">MENU</a>
-						<div class="dropdown-menu" aria-labelledby="dropdown01">
-							<a class="dropdown-item" href="">Action</a>
-							<a class="dropdown-item" href="#">Another action</a>
-							<a class="dropdown-item" href="#">Something else here</a>
-						</div>
-          </li>
           -->
         </ul>
+
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20">{{ user_name }}</a>
+						<div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" href="">Profile</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">My Events</a>
+              <div class="dropdown-divider"></div>
+						</div>
+          </li>
+        </ul>
+
         <form class="form-inline mt-2 mt-md-0">
           <input class="form-control mr-sm-2" type="text" placeholder="Event name..." aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
 
+        
         <img src="static/profile_icon.svg" style="width:30px;height:30px;margin-left:10px;margin-right:10px;">
 
 
