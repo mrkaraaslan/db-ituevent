@@ -15,9 +15,10 @@
             <div class="text-center mb-4">
                 <img class="mb-4" src="{{ url_for('static', filename='profile_icon.svg')}}" width="72" height="72">
                 <h1 class="mb-3 font-weight-normal myfg">İTÜEVENT</h1>
+                <h3 class="mb-3 font-weight-normal myfg">{% block headline %}{% endblock %}</h3>
             </div>
             {% block formcontent %}{% endblock %}
-            <p class="mt-5 mb-3 text-muted text-center">&copy; 2020, mrkaraaslan</p>
+            <p class="mt-5 mb-3 text-muted text-center">&copy; 2020, <a href="https://github.com/mrkaraaslan">@mrkaraaslan</a></p>
         </form>
         <!--jQuery first, then Popper.js, then Bootstrap JS-->
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
