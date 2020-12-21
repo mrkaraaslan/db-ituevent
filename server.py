@@ -12,6 +12,7 @@ def create_app():
     app.add_url_rule("/", view_func=pages.search_events_page)
     app.add_url_rule("/attended_events", view_func=pages.attended_events_page)
     app.add_url_rule("/profile", view_func=pages.profile_page)
+    app.add_url_rule("/settings", view_func=pages.settings_page)
     app.add_url_rule("/my_events", view_func=pages.my_events_page)
 
     return app

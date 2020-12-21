@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
   <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,43 +9,51 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     {% block style %}{% endblock %}
   </head>
-  <body>
+  <body class="d-flex flex-column h-100">
+    <header>
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top mybg">
+        <a class="navbar-brand" href="#">İTÜEVENT</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item {% if request.path==url_for('search_events_page') %} active {% endif %}">
+              <a class="nav-link" href="{{ url_for('search_events_page') }}">Search Event</a>
+            </li>
+            <li class="nav-item {% if request.path==url_for('attended_events_page') %} active {% endif %}">
+              <a class="nav-link" href="{{ url_for('attended_events_page') }}">Schedule</a>
+            </li>
+            <li class="nav-item {% if request.path==url_for('my_events_page') %} active {% endif %}">
+              <a class="nav-link" href="{{ url_for('my_events_page') }}">My Events</a>
+            </li>
+            <!--
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li>
+            -->
+          </ul>
+  
+          <!--User Image-->
+          <a href="{{ url_for('profile_page') }}">
+            <img src="static/profile_icon.svg" style="width:33px;height:33px;margin-left:10px;margin-right:10px;">
+          </a>
+          {{ user_name }}
+        </div>
+      </nav>
+    </header>
     <!--NavBar-->
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top mybg">
-      <a class="navbar-brand" href="#">İTÜEVENT</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item {% if request.path==url_for('search_events_page') %} active {% endif %}">
-            <a class="nav-link" href="{{ url_for('search_events_page') }}">Search Event</a>
-          </li>
-          <li class="nav-item {% if request.path==url_for('attended_events_page') %} active {% endif %}">
-            <a class="nav-link" href="{{ url_for('attended_events_page') }}">Schedule</a>
-          </li>
-          <li class="nav-item {% if request.path==url_for('my_events_page') %} active {% endif %}">
-            <a class="nav-link" href="{{ url_for('my_events_page') }}">My Events</a>
-          </li>
-          <!--
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-          </li>
-          -->
-        </ul>
-
-        <!--User Image-->
-        <a href="{{ url_for('profile_page') }}">
-          <img src="static/profile_icon.svg" style="width:33px;height:33px;margin-left:10px;margin-right:10px;">
-        </a>
-        {{ user_name }}
-      </div>
-    </nav>
-    <main role="main" class="f">
+    
+    <main role="main" class="f flex-shrink-0">
       <div class="container">
         {% block content %}{% endblock %}
       </div>
     </main>
+    <footer class="footer mt-auto py-3 bg-light">
+      <div class="container">
+        <span class="text-muted">&copy; 2020, <a href="https://github.com/mrkaraaslan">@mrkaraaslan</span>
+      </div>
+    </footer>
 
     
 

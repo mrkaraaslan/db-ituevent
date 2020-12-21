@@ -20,5 +20,8 @@ def attended_events_page():
 def profile_page():
     return render_template("App/profile.html", user_name= "Mehmet Karaaslan")
 
+def settings_page():
+    return render_template("App/settings.html", user_name="Mehmet Karaaslan")
+
 def my_events_page():
     return render_template("App/my_events.html", user_name= "Mehmet Karaaslan")
