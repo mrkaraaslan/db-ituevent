@@ -1,6 +1,9 @@
-from flask import Flask, render_template, request
+from flask import Flask
+import uuid
 
 import pages
+from database import Database
+from event import Event
 
 def create_app():
     app = Flask(__name__)
@@ -14,6 +17,7 @@ def create_app():
     app.add_url_rule("/profile", view_func=pages.profile_page)
     app.add_url_rule("/settings", view_func=pages.settings_page)
     app.add_url_rule("/my_events", view_func=pages.my_events_page)
+    app.add_url_rule("/create_event", view_func=pages.create_event_page)
 
     return app
 

@@ -1,0 +1,53 @@
+{% extends "App/app_temp.html" %}
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='create_event.css')}}"/>
+{% endblock %}
+{% block title %}Attended Events{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+      <div class="col-md-10 m-auto order-xl-2 mb-5 mb-xl-0">
+        <div class="card shadow">
+          <div class="container mt-3">
+            <h2>Create Event</h2>
+            <form class="form-sign">
+              <div class="form-label-group">
+                <input type="text" id="name" class="form-control" placeholder="Event Name" required>
+                <label for="name">Event Name</label>
+              </div>
+              <div class="form-label-group">
+                <input type="text" id="talker" class="form-control" placeholder="Talker">
+                <label for="talker">Talker</label>
+              </div>
+              <div class="form-label-group">
+                <input type="text" id="startdate" class="form-control" placeholder="Starts">
+                <label for="startdate">Starts</label>
+              </div>
+              <div class="form-label-group">
+                <input type="text" id="enddate" class="form-control" placeholder="Ends">
+                <label for="enddate">Ends</label>
+              </div>
+              <div class="form-label-group">
+                <input type="number" id="maxparticipants" class="form-control" placeholder="Max Participants">
+                <label for="maxparticipants">Max Participants</label>
+              </div>
+              <div class="form-label-group">
+                <input type="text" id="price" class="form-control" placeholder="Price">
+                <label for="price">Price</label>
+              </div>
+              <div class="form-label-group">
+                <input type="text" id="address" class="form-control" placeholder="Address">
+                <label for="address">Address</label>
+              </div>
+              <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" rows="5"></textarea>
+              </div>
+              <button class="btn btn-lg btn-block" style="color:white;background-color: indigo;"type="submit">Create Event</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

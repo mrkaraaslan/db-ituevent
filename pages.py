@@ -25,3 +25,6 @@ def settings_page():
 
 def my_events_page():
     return render_template("App/my_events.html", user_name= "Mehmet Karaaslan")
+
+def create_event_page():
+    return render_template("App/create_event.html", user_name= "Mehmet Karaaslan")

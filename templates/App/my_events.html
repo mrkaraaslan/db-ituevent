@@ -1,5 +1,31 @@
 {% extends "App/app_temp.html" %}
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='argon.css')}}"/>
+{% endblock %}
 {% block title %}Profile{% endblock %}
 {% block content %}
-    <h1>MY EVENTS Page</h1>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-10 m-auto order-xl-2 mb-5 mb-xl-0">
+        <div class="card shadow">
+          <div class="container mt-3">
+            <form>
+              <div class="form-group row">
+                <div class="col-sm-10">
+                  <input class="form-control" type="text" placeholder="Event name..." aria-label="Search">
+                </div>
+                <div class="col-sm-2">
+                  <button class="btn btn-success" type="submit">Search</button>
+                </div>
+              </div>
+            </form>
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
