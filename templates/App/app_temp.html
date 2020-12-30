@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='itu_event.css')}}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/itu_event.css')}}"/>
     <!--Bootstrap CSS-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     {% block style %}{% endblock %}
@@ -36,7 +36,7 @@
   
           <!--User Image-->
           <a href="{{ url_for('profile_page') }}">
-            <img src="static/profile_icon.svg" style="width:33px;height:33px;margin-left:10px;margin-right:10px;">
+            <img src="static/img/profile_icon.svg" style="width:33px;height:33px;margin-left:10px;margin-right:10px;">
           </a>
           {{ user_name }}
         </div>

@@ -1,8 +1,11 @@
 {% extends "App/app_temp.html" %}
 {% block style %}
-<link rel="stylesheet" href="{{ url_for('static', filename='create_event.css')}}"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/create_event.css')}}"/>
+
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="{{ url_for('static', filename='js/create_event.js')}}"></script>
 {% endblock %}
-{% block title %}Attended Events{% endblock %}
+{% block title %}Create Event{% endblock %}
 {% block content %}
 <div class="container mt-5">
     <div class="row">
@@ -10,9 +13,26 @@
         <div class="card shadow">
           <div class="container mt-3">
             <h2>Create Event</h2>
-            <form class="form-sign">
+            <form class="form-sign" method="POST", name="create_event_form">
+              <div class="form-group">
+                <div class="row">
+                  <div class="input-group col-md-8 my-auto">
+                    <div class="input-group-btn">
+                      <div class="fileUpload btn fake-shadow" style="color:white;background-color: indigo;">
+                        <span><i class="glyphicon glyphicon-upload"></i>Choose Event Image</span>
+                        <input type="file" class="form-control-file" id="logo-id">
+                      </div>
+                    </div>
+                    <input id="fakeUploadLogo" class="form-control fake-shadow" placeholder="Choose Image" disabled="disabled">
+                  </div>
+                  <div class="col-md-4">
+                    <img class="thumbnail img-preview" src="static/img/ituevent.png">
+                  </div>
+                </div>
+              </div>
+
               <div class="form-label-group">
-                <input type="text" id="name" class="form-control" placeholder="Event Name" required>
+                <input type="text" id="name" class="form-control" required placeholder="Event Name">
                 <label for="name">Event Name</label>
               </div>
               <div class="form-label-group">
@@ -20,20 +40,22 @@
                 <label for="talker">Talker</label>
               </div>
               <div class="form-label-group">
-                <input type="text" id="startdate" class="form-control" placeholder="Starts">
-                <label for="startdate">Starts</label>
+                <input type="date" id="date" class="form-control" required placeholder="Date">
+                <label for="date">Date</label>
               </div>
               <div class="form-label-group">
-                <input type="text" id="enddate" class="form-control" placeholder="Ends">
-                <label for="enddate">Ends</label>
+                <input type="time" id="time" class="form-control" required placeholder="Time">
+                <label for="time">Time</label>
               </div>
               <div class="form-label-group">
-                <input type="number" id="maxparticipants" class="form-control" placeholder="Max Participants">
+                <input type="number" id="maxparticipants" class="form-control" min="1" placeholder="Max Participants">
                 <label for="maxparticipants">Max Participants</label>
+                <small id="emailHelp" class="form-text text-muted">Leave blank if there is no participant limit.</small>
               </div>
               <div class="form-label-group">
-                <input type="text" id="price" class="form-control" placeholder="Price">
-                <label for="price">Price</label>
+                <input type="number" id="price" class="form-control" min="1" placeholder="Price">
+                <label for="price">Price ₺</label>
+                <small id="emailHelp" class="form-text text-muted">Leave blank for free events.</small>
               </div>
               <div class="form-label-group">
                 <input type="text" id="address" class="form-control" placeholder="Address">
