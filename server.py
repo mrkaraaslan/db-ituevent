@@ -11,7 +11,7 @@ def create_app():
     app = Flask(__name__)
 
     app.add_url_rule("/sign_in", view_func=pages.sign_in_page)
-    app.add_url_rule("/sign_up", view_func=pages.sign_up_page)
+    app.add_url_rule("/sign_up", view_func=pages.sign_up_page, methods=["GET","POST"])
     app.add_url_rule("/forgot_password", view_func=pages.forgot_password_page)
 
     app.add_url_rule("/", view_func=pages.search_events_page)

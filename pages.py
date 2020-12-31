@@ -1,12 +1,28 @@
-from flask import render_template, request
+from flask import render_template, request, redirect, url_for
 from datetime import datetime
+
+from db_py.config import config
+from db_py.Sign.sign_up import controller, sign_up
 
 #sign pages
 def sign_in_page():
-    return render_template("Sign/sign_in.html")
+    return render_template("Sign/sign_in.html", message_list = {})
 
 def sign_up_page():
-    return render_template("Sign/sign_up.html")
+    l = {}
+    if request.method == "POST":
+        email = request.form["inputEmail"]
+        pass1 = request.form["inputPassword"]
+        pass2 = request.form["inputPasswordAgain"]
+
+        l = controller(email, pass1, pass2)
+        if len(l) == 0: #no errors
+            params = config()
+            l = sign_up(email, pass1, params)
+            if len(l) == 0:
+                l["success"] = "Succesfully signed up."
+
+    return render_template("Sign/sign_up.html", message_list = l)
 
 def forgot_password_page():
     return render_template("Sign/forgot_password.html")
