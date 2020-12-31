@@ -1,23 +1,58 @@
 {% extends "Sign/sign_temp.html" %}
 {% block title %}Sign In{% endblock %}
+{% block style %}
+<script>
+    var check = function() {
+        var e = document.getElementById('inputEmail').value
+        var c = ""
+        var p = document.getElementById('inputPassword').value;
+
+        if (e.length > 11){
+            c = e.split("@").pop();
+
+            if(c != "itu.edu.tr"){
+                document.getElementById('message_email').innerHTML = 'Need an ITU email address!';
+            }
+            else {
+                document.getElementById('message_email').innerHTML = '';
+            }
+        }
+        else {
+            document.getElementById('message_email').innerHTML = '';
+        }
+
+        if(p != "" && c == "itu.edu.tr"){
+            document.getElementById('signbtn').disabled = false;
+        }
+        else {
+            document.getElementById('signbtn').disabled = true;
+        }
+    }
+</script>
+{% endblock %}
 {% block headline %}Login{% endblock %}
 {% block formcontent %}
   <div class="form-label-group">
-    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+    <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email address" required autofocus onkeyup='check();'>
     <label for="inputEmail">ITU email</label>
+    <small id="message_email" class="form-text" style="color:red">{{message_list['email']}}</small>
   </div>
 
   <div class="form-label-group">
-    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required onkeyup='check();'>
     <label for="inputPassword">Password</label>
+    <small id="message_password" class="form-text" style="color:red">{{message_list['password']}}</small>
   </div>
 
   <div class="checkbox mb-3">
     <label>
-        <input type="checkbox" value="remember-me"> Remember me
+      <input type="checkbox" value="remember-me"> Remember me
     </label>
   </div>
-  <button class="btn btn-lg btn-block" style="color:white;background-color: indigo;"type="submit">Sign In</button>
+  
+  <button class="btn btn-lg btn-block" disabled id="signbtn" style="color:white;background-color: indigo;"type="submit">Sign In</button>
+  <small id="message_password" class="form-text text-center" style="color:red">{{message_list['err']}}</small>
+  <small id="message_password" class="form-text" style="color:red">{{message_list['db_message']}}</small>
 
   <p class="mt-3 text-center"> <a href="{{url_for('sign_up_page')}}">SIGN UP</a> / <a href="{{url_for('forgot_password_page')}}">Forgot password?</a></p>
 {% endblock %}

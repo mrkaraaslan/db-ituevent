@@ -2,11 +2,23 @@ from flask import render_template, request, redirect, url_for
 from datetime import datetime
 
 from db_py.config import config
-from db_py.Sign.sign_up import controller, sign_up
+from db_py.Sign import sign_in, sign_up
 
 #sign pages
 def sign_in_page():
-    return render_template("Sign/sign_in.html", message_list = {})
+    l = {}
+    if request.method == "POST":
+        email = request.form["inputEmail"]
+        password = request.form["inputPassword"]
+        
+        l = sign_in.controller(email, password)
+        if len(l) == 0: #no errors
+            params = config()
+            l = sign_in.sign_in(email, password, params)
+            if len(l) == 0:
+                return redirect(url_for("search_events_page"))
+
+    return render_template("Sign/sign_in.html", message_list = l)
 
 def sign_up_page():
     l = {}
@@ -15,10 +27,10 @@ def sign_up_page():
         pass1 = request.form["inputPassword"]
         pass2 = request.form["inputPasswordAgain"]
 
-        l = controller(email, pass1, pass2)
+        l = sign_up.controller(email, pass1, pass2)
         if len(l) == 0: #no errors
             params = config()
-            l = sign_up(email, pass1, params)
+            l = sign_up.sign_up(email, pass1, params)
             if len(l) == 0:
                 l["success"] = "Succesfully signed up."
 
