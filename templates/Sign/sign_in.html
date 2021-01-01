@@ -32,6 +32,9 @@
 {% endblock %}
 {% block headline %}Login{% endblock %}
 {% block formcontent %}
+  {% for message in get_flashed_messages() %}
+    <small class="form-text text-center" style="color:green">{{message}}</small>
+  {% endfor %}
   <div class="form-label-group">
     <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email address" required autofocus onkeyup='check();'>
     <label for="inputEmail">ITU email</label>

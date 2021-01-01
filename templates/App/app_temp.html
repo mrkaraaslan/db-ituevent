@@ -38,7 +38,7 @@
           <a href="{{ url_for('profile_page') }}">
             <img src="static/img/profile_icon.svg" style="width:33px;height:33px;margin-left:10px;margin-right:10px;">
           </a>
-          {{ user_name }}
+          {{ current_user.email }}
         </div>
       </nav>
     </header>
