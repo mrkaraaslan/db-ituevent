@@ -4,6 +4,9 @@
 
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="{{ url_for('static', filename='js/create_event.js')}}"></script>
+<script>
+  
+</script>
 {% endblock %}
 {% block title %}Create Event{% endblock %}
 {% block content %}
@@ -32,38 +35,38 @@
               </div>
 
               <div class="form-label-group">
-                <input type="text" id="name" class="form-control" required placeholder="Event Name">
+                <input type="text" id="name" name="name" class="form-control" required placeholder="Event Name">
                 <label for="name">Event Name</label>
               </div>
               <div class="form-label-group">
-                <input type="text" id="talker" class="form-control" placeholder="Talker">
+                <input type="text" id="talker" name="talker" class="form-control" placeholder="Talker">
                 <label for="talker">Talker</label>
               </div>
               <div class="form-label-group">
-                <input type="date" id="date" class="form-control" required placeholder="Date">
+                <input type="date" id="date" name="date" class="form-control" required placeholder="Date">
                 <label for="date">Date</label>
               </div>
               <div class="form-label-group">
-                <input type="time" id="time" class="form-control" required placeholder="Time">
+                <input type="time" id="time" name="time" class="form-control" required placeholder="Time">
                 <label for="time">Time</label>
               </div>
               <div class="form-label-group">
-                <input type="number" id="maxparticipants" class="form-control" min="1" placeholder="Max Participants">
+                <input type="number" id="maxparticipants" name="maxparticipants" class="form-control" min="1" placeholder="Max Participants">
                 <label for="maxparticipants">Max Participants</label>
                 <small id="emailHelp" class="form-text text-muted">Leave blank if there is no participant limit.</small>
               </div>
               <div class="form-label-group">
-                <input type="number" id="price" class="form-control" min="1" placeholder="Price">
+                <input type="number" id="price" name="price" class="form-control" min="1" placeholder="Price">
                 <label for="price">Price ₺</label>
                 <small id="emailHelp" class="form-text text-muted">Leave blank for free events.</small>
               </div>
               <div class="form-label-group">
-                <input type="text" id="address" class="form-control" placeholder="Address">
+                <input type="text" id="address" name="address" class="form-control" placeholder="Address">
                 <label for="address">Address</label>
               </div>
               <div class="form-group">
                 <label for="description">Description</label>
-                <textarea class="form-control" id="description" rows="5"></textarea>
+                <textarea class="form-control" id="description" name="description" rows="5"></textarea>
               </div>
               <button class="btn btn-lg btn-block" style="color:white;background-color: indigo;"type="submit">Create Event</button>
             </form>

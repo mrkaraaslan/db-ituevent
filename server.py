@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 
 import pages
 from database import Database
@@ -24,10 +24,11 @@ def create_app():
 
     app.add_url_rule("/", view_func=pages.search_events_page)
     app.add_url_rule("/attended_events", view_func=pages.attended_events_page)
-    app.add_url_rule("/profile", view_func=pages.profile_page)
+    app.add_url_rule("/profile", defaults={'email': None }, view_func=pages.profile_page)
+    app.add_url_rule("/profile/<string:email>", view_func=pages.profile_page)
     app.add_url_rule("/settings", view_func=pages.settings_page)
     app.add_url_rule("/my_events", view_func=pages.my_events_page)
-    app.add_url_rule("/create_event", view_func=pages.create_event_page)
+    app.add_url_rule("/create_event", view_func=pages.create_event_page, methods=["GET","POST"])
 
     lm.init_app(app)
     lm.login_view = "sign_in_page"

@@ -36,7 +36,6 @@ def sign_in(email, password, dsn):
         else:
             curr.execute(command_password, (email,))
             db_pass = str(curr.fetchone()[0])
-            print(db_pass)
             curr.close()
 
             if hashed_password != db_pass:

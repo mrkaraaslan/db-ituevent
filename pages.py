@@ -1,9 +1,10 @@
 from flask import render_template, request, redirect, url_for, flash, current_app
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 from datetime import datetime
 
 from db_py.config import config
 from db_py.Sign import sign_in, sign_up
+from db_py.App.profile import ShowUser
 
 from _py.user import get_user
 
@@ -20,7 +21,6 @@ def sign_up_page():
             params = config()
             l = sign_up.sign_up(email, pass1, params)
             if len(l) == 0:
-                l["success"] = "Succesfully signed up."
                 flash("Succesfully signed up.")
                 return redirect(url_for("sign_in_page"))
 
@@ -55,27 +55,42 @@ def logout_page():
 #app pages
 @login_required
 def search_events_page():
-    return render_template("App/search_events.html", user_name= "Mehmet Karaaslan")
+    return render_template("App/search_events.html")
 
 @login_required
 def attended_events_page():
-    return render_template("App/attended_events.html", user_name= "Mehmet Karaaslan")
+    return render_template("App/attended_events.html")
 
 @login_required
-def profile_page():
-    return render_template("App/profile.html", user_name= "Mehmet Karaaslan")
+def profile_page(email):
+    if not email:
+        email = current_user.email
+    show_user = ShowUser(email)
+    params = config()
+    l = show_user.get_data(params)
+    return render_template("App/profile.html", show_user = show_user, message_list= l)
 
 @login_required
 def settings_page():
-    return render_template("App/settings.html", user_name="Mehmet Karaaslan")
+    return render_template("App/settings.html")
 
 @login_required
 def my_events_page():
-    return render_template("App/my_events.html", user_name= "Mehmet Karaaslan")
+    return render_template("App/my_events.html")
 
 @login_required
 def create_event_page():
-    return render_template("App/create_event.html", user_name= "Mehmet Karaaslan")
+    if request.method == "POST":
+        name = request.form["name"]
+        talker = request.form["talker"]
+        date = request.form["date"]
+        time = request.form["time"]
+        maxparticipants = request.form["maxparticipants"]
+        price = request.form["price"]
+        address = request.form["address"]
+        description = request.form["description"]
+
+    return render_template("App/create_event.html")
 """
 event_name = request.form["name"]
     event_talker = request.form["talker"]
