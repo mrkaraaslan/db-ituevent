@@ -1,6 +1,7 @@
 {% extends "App/app_temp.html" %}
 {% block style %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/bootdey.css')}}"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/create_event.css')}}"/>
 {% endblock %}
 {% block title %}Settings{% endblock %}
 {% block content %}
@@ -9,15 +10,15 @@
         <div class="row no-gutters row-bordered row-border-light">
             <div class="col-md-3 pt-0">
                 <div class="list-group list-group-flush account-settings-links">
-                    <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">General</a>
-                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password">Change password</a>
+                    <a class="list-group-item list-group-item-action active" href="{{ url_for('settings_page') }}">General</a>
+                    <a class="list-group-item list-group-item-action" href="{{ url_for('settings_password_page') }}">Change password</a>
                 </div>
             </div>
             <div class="col-md-9">
                 <div class="tab-content">
                     <div class="tab-pane fade active show" id="account-general">
                     <div class="card-body media align-items-center">
-                        <img src="static/img/pp.jpg" class="d-block ui-w-80">
+                        <img src="{{ url_for('static', filename='img/pp.jpg')}}" class="d-block ui-w-80">
                         <div class="media-body ml-4">
                             <label class="btn btn-outline-primary">
                             Upload new photo
@@ -47,29 +48,16 @@
                             <label class="form-label">Department</label>
                             <input type="text" class="form-control" value="">
                             <select class="custom-select">
-                                <option selected>Choose...</option>
+                                <option>Choose...</option>
                                 <option>Computer Engineering</option>
+                                <option>Artificial Intelligence and Data Engineering</option>
+                                <option>Civil Engineering</option>
+                                <option>Geomatics Engineering</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label class="form-label">About me</label>
-                            <textarea class="form-control" rows="2">If I decide to put an about me part in profile page this place will be used for it.</textarea>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="tab-pane fade" id="account-change-password">
-                    <div class="card-body pb-2">
-                        <div class="form-group">
-                            <label class="form-label">Current password</label>
-                            <input type="password" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">New password</label>
-                            <input type="password" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Repeat new password</label>
-                            <input type="password" class="form-control">
+                            <textarea class="form-control" rows="2"></textarea>
                         </div>
                     </div>
                     </div>

@@ -3,10 +3,11 @@ from flask_login import login_user, logout_user, login_required, current_user
 from datetime import datetime
 
 from db_py.config import config
+from db_py.user import get_user
 from db_py.Sign import sign_in, sign_up
 from db_py.App.profile import ShowUser
+from db_py.App import settings_password
 
-from _py.user import get_user
 
 #sign pages
 def sign_up_page():
@@ -40,7 +41,7 @@ def sign_in_page():
             params = config()
             l = sign_in.sign_in(email, password, params)
             if len(l) == 0:
-                user = get_user(email)
+                user = get_user(email, params)
                 user.password = password
                 login_user(user)
                 next_page = request.args.get("next", url_for("search_events_page"))
@@ -72,7 +73,23 @@ def profile_page(email):
 
 @login_required
 def settings_page():
-    return render_template("App/settings.html")
+    l = {}
+    return render_template("App/settings.html", message_list = l)
+
+@login_required
+def settings_password_page():
+    l = {}
+    if request.method == "POST":
+        password = request.form["inputPassword"]
+        pass1 = request.form["inputNewPassword"]
+        pass2 = request.form["inputNewPasswordAgain"]
+        
+        l = settings_password.controller(password, pass1, pass2)
+        if len(l) == 0:
+            params = config()
+            l = settings_password.change_password(pass1, params)
+
+    return render_template("App/settings_password.html", message_list = l)
 
 @login_required
 def my_events_page():
@@ -81,14 +98,15 @@ def my_events_page():
 @login_required
 def create_event_page():
     if request.method == "POST":
-        name = request.form["name"]
-        talker = request.form["talker"]
-        date = request.form["date"]
-        time = request.form["time"]
-        maxparticipants = request.form["maxparticipants"]
-        price = request.form["price"]
-        address = request.form["address"]
-        description = request.form["description"]
+        return render_template("App/create_event.html")
+        #name = request.form["name"]
+        #talker = request.form["talker"]
+        #date = request.form["date"]
+        #time = request.form["time"]
+        #maxparticipants = request.form["maxparticipants"]
+        #price = request.form["price"]
+        #address = request.form["address"]
+        #description = request.form["description"]"""
 
     return render_template("App/create_event.html")
 """
