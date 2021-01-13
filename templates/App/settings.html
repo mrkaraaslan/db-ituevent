@@ -18,6 +18,7 @@
                 <div class="tab-content">
                 <div class="tab-pane fade active show">
                 <form class="form-sign" method="POST", name="update_profile_form">
+                    <small class="form-text text-center" style="color:green">{{update_messages['success']}}</small>
                     <div class="card-body media align-items-center">
                         <img src="{{ url_for('static', filename='img/pp.jpg')}}" class="d-block ui-w-80">
                         <div class="media-body ml-4">
@@ -35,44 +36,44 @@
                             <input type="text" id="inputName" name="inputName" class="form-control" placeholder="Name" value="{% if show_user.user_name != None %} {{show_user.user_name}} {% endif %}">
                             <label for="inputName">Name</label>
                         </div>
-                        {% if show_user.edu_level != None %} {{show_user.edu_level}} {% endif %}
-                        {% if show_user.department != None %} {{show_user.department}} {% endif %}
-                        {% if show_user.about_me != None %} {{show_user.about_me}} {% endif %}
                         <div class="form-group">
                             <label class="form-label">Educational Level</label>
-                            <select class="custom-select">
-                                <option selected>Choose...</option>
-                                <option>Undergraduate</option>
-                                <option>Postgraduate</option>
-                                <option>Graduated</option>
-                                <option>Academician</option>
+                            <select class="custom-select" name="level_select">
+                                <option>Choose...</option>
+                                {% for level in levels %}
+                                    <option {% if show_user.edu_level == level[0] %} selected {% endif %}>{{ level[0] }}</option>
+                                {% endfor %}
                             </select>
+                            <small class="form-text" style="color:red">{{message_list['level']}}{{message_list['level_message']}}</small>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Department</label>
-                            <input type="text" class="form-control" value="">
-                            <select class="custom-select">
+                            <select class="custom-select" name="department_select">
                                 <option>Choose...</option>
-                                <option>Computer Engineering</option>
-                                <option>Artificial Intelligence and Data Engineering</option>
-                                <option>Civil Engineering</option>
-                                <option>Geomatics Engineering</option>
+                                {% for dep in departments %}
+                                    <option {% if show_user.department == dep[0] %} selected {% endif %}>{{ dep[0] }}</option>
+                                {% endfor %}
                             </select>
+                            <small class="form-text" style="color:red">{{message_list['dep']}}{{message_list['dep_message']}}</small>
                         </div>
                         <div class="form-group">
                             <label class="form-label">About me</label>
-                            <textarea class="form-control" rows="2"></textarea>
+                            <textarea class="form-control" rows="2" name="about_me">{% if show_user.about_me != None %} {{show_user.about_me}} {% endif %}</textarea>
+                        </div>
+                        <div class="text-right">
+                            <button id="updatebtn" class="btn btn-lg" style="color:white;background-color: indigo;" type="submit">Update Profile</button>
                         </div>
                     </div>
+                    
                 </form>
                 </div>
                 </div>
             </div>
         </div>
         </div>
-        <div class="text-right mt-3">
-        <button type="button" class="btn btn-primary">Save changes</button>&nbsp;
-        <button type="button" class="btn btn-default">Cancel</button>
+        <div class="text-center">
+            <small class="form-text" style="color:red">{{update_messages['err']}}</small>
+            <small class="form-text" style="color:red">{{update_messages['db_message']}}</small>
         </div>
     </div>
 {% endblock %}

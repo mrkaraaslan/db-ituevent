@@ -12,7 +12,7 @@ class ShowUser:
     def get_data(self, dsn):
 
         command_user = "SELECT EXISTS(SELECT 1 FROM security WHERE email=%s)"
-        command_data = "SELECT user_name, edu_level, department, about_me FROM users WHERE email=%s"
+        command_data = "SELECT user_name, levels.name, departments.name, about_me FROM users LEFT JOIN levels ON edu_level=levels.id LEFT JOIN departments ON department=departments.id WHERE email=%s"
 
         l = {}
         connection = None

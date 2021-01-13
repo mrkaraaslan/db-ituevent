@@ -7,6 +7,7 @@ from db_py.user import get_user
 from db_py.Sign import sign_in, sign_up
 from db_py.App.profile import ShowUser
 from db_py.App import settings_password
+from db_py.App.settings import get_levels, get_departments, update_profile
 
 
 #sign pages
@@ -76,12 +77,26 @@ def profile_page(email):
 
 @login_required
 def settings_page():
-    l = {}
     email = current_user.email
-    show_user = ShowUser(email)
     params = config()
+    l = up = levels = departments = {}
+
+    if request.method == "POST":
+        name = request.form["inputName"]
+        edu_level = request.form.get("level_select")
+        department = request.form.get("department_select")
+        about_me = request.form["about_me"]
+
+        up = update_profile(email, name, edu_level, department, about_me, params)
+    
+    show_user = ShowUser(email)
     l = show_user.get_data(params)
-    return render_template("App/settings.html", show_user = show_user, message_list = l)
+    if len(l) == 0:
+        l, levels = get_levels(params)
+        if len(l) == 0:
+            l, departments = get_departments(params)
+
+    return render_template("App/settings.html", show_user = show_user, levels = levels, departments = departments, message_list = l, update_messages = up)
 
 @login_required
 def settings_password_page():
