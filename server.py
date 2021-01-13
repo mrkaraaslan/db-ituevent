@@ -8,12 +8,15 @@ from event import Event
 from db_py.user import get_user
 from db_py.config import config
 
+#from db_py.create_tables import create_tables
+#dsn = config()
+#create_tables(dsn)
+
 lm = LoginManager()
 
 @lm.user_loader
 def load_user(email):
-    params = config()
-    return get_user(email, params)
+    return get_user(email)
 
 def create_app():
     app = Flask(__name__)

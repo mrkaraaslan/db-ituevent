@@ -41,17 +41,20 @@ def sign_in_page():
             params = config()
             l = sign_in.sign_in(email, password, params)
             if len(l) == 0:
-                user = get_user(email, params)
-                user.password = password
+                user = get_user(email)
                 login_user(user)
                 next_page = request.args.get("next", url_for("search_events_page"))
+                if next_page == url_for("logout_page"):
+                    next_page = url_for("search_events_page")
                 return redirect(next_page)
 
     return render_template("Sign/sign_in.html", message_list = l)
 
+@login_required
 def logout_page():
     logout_user()
-    return "loggod out successfully" #render_template("Sign/forgot_password.html")
+    flash("Succesfully logged out.")
+    return redirect(url_for("sign_in_page"))
 
 #app pages
 @login_required
@@ -74,7 +77,11 @@ def profile_page(email):
 @login_required
 def settings_page():
     l = {}
-    return render_template("App/settings.html", message_list = l)
+    email = current_user.email
+    show_user = ShowUser(email)
+    params = config()
+    l = show_user.get_data(params)
+    return render_template("App/settings.html", show_user = show_user, message_list = l)
 
 @login_required
 def settings_password_page():
@@ -83,10 +90,10 @@ def settings_password_page():
         password = request.form["inputPassword"]
         pass1 = request.form["inputNewPassword"]
         pass2 = request.form["inputNewPasswordAgain"]
+        params = config()
         
-        l = settings_password.controller(password, pass1, pass2)
+        l = settings_password.controller(password, pass1, pass2, params)
         if len(l) == 0:
-            params = config()
             l = settings_password.change_password(pass1, params)
 
     return render_template("App/settings_password.html", message_list = l)

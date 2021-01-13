@@ -2,14 +2,30 @@ import psycopg2 as db_event
 
 def create_tables(dsn):
     commands = (
+         """
+        CREATE TABLE IF NOT EXISTS levels(
+            id SERIAL,
+            name VARCHAR (255) NOT NULL,
+            PRIMARY KEY(id)
+        );
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS departments(
+            id SERIAL,
+            name VARCHAR (255) NOT NULL,
+            PRIMARY KEY(id)
+        );
+        """,
         """
         CREATE TABLE IF NOT EXISTS users(
             email VARCHAR(255) NOT NULL UNIQUE,
             user_name VARCHAR(255),
-            edu_level VARCHAR(255),
-            department VARCHAR(255),
+            edu_level INT,
+            department INT,
             about_me TEXT,
-            PRIMARY KEY(email)
+            PRIMARY KEY(email),
+            FOREIGN KEY(edu_level) REFERENCES levels(id),
+            FOREIGN KEY(department) REFERENCES departments(id)
         );
         """,
         """

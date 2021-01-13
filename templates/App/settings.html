@@ -16,7 +16,8 @@
             </div>
             <div class="col-md-9">
                 <div class="tab-content">
-                    <div class="tab-pane fade active show" id="account-general">
+                <div class="tab-pane fade active show">
+                <form class="form-sign" method="POST", name="update_profile_form">
                     <div class="card-body media align-items-center">
                         <img src="{{ url_for('static', filename='img/pp.jpg')}}" class="d-block ui-w-80">
                         <div class="media-body ml-4">
@@ -30,10 +31,13 @@
                     </div>
                     <hr class="border-light m-0">
                     <div class="card-body">
-                        <div class="form-group">
-                            <label class="form-label">Name</label>
-                            <input type="text" class="form-control" value="{{user_name}}">
+                        <div class="form-label-group">
+                            <input type="text" id="inputName" name="inputName" class="form-control" placeholder="Name" value="{% if show_user.user_name != None %} {{show_user.user_name}} {% endif %}">
+                            <label for="inputName">Name</label>
                         </div>
+                        {% if show_user.edu_level != None %} {{show_user.edu_level}} {% endif %}
+                        {% if show_user.department != None %} {{show_user.department}} {% endif %}
+                        {% if show_user.about_me != None %} {{show_user.about_me}} {% endif %}
                         <div class="form-group">
                             <label class="form-label">Educational Level</label>
                             <select class="custom-select">
@@ -60,7 +64,8 @@
                             <textarea class="form-control" rows="2"></textarea>
                         </div>
                     </div>
-                    </div>
+                </form>
+                </div>
                 </div>
             </div>
         </div>

@@ -35,9 +35,18 @@
           </ul>
   
           <!--User Image-->
-          <a href="{{ url_for('profile_page') }}">
-            <img src="{{ url_for('static', filename='img/profile_icon.svg')}}" style="width:33px;height:33px;margin-left:10px;margin-right:10px;">
-          </a>
+          <div class="dropdown"> 
+            <button class="btn" style="color:white;background-color: indigo; padding: 0rem !important;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+              <img src="{{ url_for('static', filename='img/profile_icon.svg')}}" style="width:33px;height:33px;margin-left:10px;margin-right:10px;">
+            </button> 
+            
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="{{ url_for('profile_page') }}">Profile</a>
+              <a class="dropdown-item" href="{{ url_for('settings_page') }}">Settings</a>
+              <a class="dropdown-item" href="{{ url_for('create_event_page') }}">New Event</a>
+              <a class="dropdown-item" style="color: red;" href="{{ url_for('logout_page') }}">Logout</a>
+            </div> 
+          </div> 
           {{ current_user.email }}
         </div>
       </nav>
