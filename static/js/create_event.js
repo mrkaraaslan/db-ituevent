@@ -3,6 +3,7 @@ $(document).ready(function() {
     brand.className = 'attachment_upload';
     brand.onchange = function() {
         document.getElementById('fakeUploadLogo').value = this.value.substring(12);
+        document.getElementById('img_name').value = this.value.substring(12);
     };
 
     // Source: http://stackoverflow.com/a/4459419/6396981

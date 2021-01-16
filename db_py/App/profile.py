@@ -1,8 +1,9 @@
 import psycopg2 as db_event
+from base64 import b64encode
 
 class ShowUser:
     def __init__(self, email):
-        self.img = ""  #how will I store image
+        self.img = None
         self.email = email
         self.user_name = ""
         self.edu_level = ""
@@ -12,7 +13,7 @@ class ShowUser:
     def get_data(self, dsn):
 
         command_user = "SELECT EXISTS(SELECT 1 FROM security WHERE email=%s)"
-        command_data = "SELECT user_name, levels.name, departments.name, about_me FROM users LEFT JOIN levels ON edu_level=levels.id LEFT JOIN departments ON department=departments.id WHERE email=%s"
+        command_data = "SELECT user_name, levels.name, departments.name, about_me, user_img.img_name, user_img.img FROM users LEFT JOIN levels ON edu_level=levels.id LEFT JOIN departments ON department=departments.id LEFT JOIN user_img ON users.email=user_img.email WHERE users.email=%s"
 
         l = {}
         connection = None
@@ -34,10 +35,15 @@ class ShowUser:
                 self.user_name = data[0]
                 self.edu_level = data[1]
                 self.department = data[2]
-                self.about_me = data[3]      
+                self.about_me = data[3]
+                if data[4] and data[5]:
+                    self.img = {}
+                    self.img["img_name"] = data[4]
+                    self.img["img"] = b64encode(data[5]).decode("utf-8")
         except (Exception, db_event.DatabaseError) as error:
             l["err"] = "Database Error"
             l["db_message"] = error
+            print("get user error", error)
         finally:
             if connection is not None:
                 connection.close()

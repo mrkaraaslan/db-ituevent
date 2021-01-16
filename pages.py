@@ -7,7 +7,7 @@ from db_py.user import get_user
 from db_py.Sign import sign_in, sign_up
 from db_py.App.profile import ShowUser
 from db_py.App import settings_password
-from db_py.App.settings import get_levels, get_departments, update_profile
+from db_py.App.settings import get_levels, get_departments, update_profile, upload_update_img
 
 
 #sign pages
@@ -82,12 +82,17 @@ def settings_page():
     l = up = levels = departments = {}
 
     if request.method == "POST":
-        name = request.form["inputName"]
-        edu_level = request.form.get("level_select")
-        department = request.form.get("department_select")
-        about_me = request.form["about_me"]
+        img_name = request.form["img_name"]
+        if img_name != "Choose Image: 'png', 'jpg', 'jpeg'":
+            user_img = request.files["user_img"]
+            up = upload_update_img(email, user_img, params)
+        if len(up) == 0:
+            name = request.form["inputName"]
+            edu_level = request.form.get("level_select")
+            department = request.form.get("department_select")
+            about_me = request.form["about_me"]
 
-        up = update_profile(email, name, edu_level, department, about_me, params)
+            up = update_profile(email, name, edu_level, department, about_me, params)
     
     show_user = ShowUser(email)
     l = show_user.get_data(params)

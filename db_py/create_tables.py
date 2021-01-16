@@ -39,6 +39,7 @@ def create_tables(dsn):
         """
         CREATE TABLE IF NOT EXISTS user_img(
             email VARCHAR(255) NOT NULL UNIQUE,
+            img_name VARCHAR(255) NOT NULL,
             img BYTEA NOT NULL ,
             PRIMARY KEY(email),
             FOREIGN KEY(email) REFERENCES users(email)

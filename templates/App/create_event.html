@@ -5,7 +5,11 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="{{ url_for('static', filename='js/create_event.js')}}"></script>
 <script>
-  
+  var reset_img = function(){
+      document.getElementById('logo-id').value = null;
+      document.getElementById('ppimage').src="{{ url_for('static', filename='img/ituevent.png')}}";
+      document.getElementById('fakeUploadLogo').value = "Choose Image";
+  }
 </script>
 {% endblock %}
 {% block title %}Create Event{% endblock %}
@@ -19,7 +23,7 @@
             <form class="form-sign" method="POST", name="create_event_form">
               <div class="form-group">
                 <div class="row">
-                  <div class="input-group col-md-8 my-auto">
+                  <div class="input-group col-md-9 my-auto">
                     <div class="input-group-btn">
                       <div class="fileUpload btn fake-shadow" style="color:white;background-color: indigo;">
                         <span><i class="glyphicon glyphicon-upload"></i>Choose Event Image</span>
@@ -27,9 +31,10 @@
                       </div>
                     </div>
                     <input id="fakeUploadLogo" class="form-control fake-shadow" placeholder="Choose Image" disabled="disabled">
+                    <button type="button" onclick="reset_img()" class="btn btn-outline-danger">Reset</button>
                   </div>
-                  <div class="col-md-4">
-                    <img class="thumbnail img-preview" src="static/img/ituevent.png">
+                  <div class="col-md-3 text-center">
+                    <img class="thumbnail img-preview" id="ppimage" src="{{ url_for('static', filename='img/ituevent.png')}}">
                   </div>
                 </div>
               </div>

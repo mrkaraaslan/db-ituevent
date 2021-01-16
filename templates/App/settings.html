@@ -2,6 +2,17 @@
 {% block style %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/bootdey.css')}}"/>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/create_event.css')}}"/>
+
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="{{ url_for('static', filename='js/create_event.js')}}"></script>
+<script>
+    var reset_img = function(){
+        document.getElementById('logo-id').value = "";
+        document.getElementById('ppimage').src="{{ url_for('static', filename='img/pp.jpg')}}";
+        document.getElementById('fakeUploadLogo').value = "Choose Image: 'png', 'jpg', 'jpeg'";
+        document.getElementById('img_name').value = "";
+    }
+</script>
 {% endblock %}
 {% block title %}Settings{% endblock %}
 {% block content %}
@@ -17,23 +28,30 @@
             <div class="col-md-9">
                 <div class="tab-content">
                 <div class="tab-pane fade active show">
-                <form class="form-sign" method="POST", name="update_profile_form">
+                <form class="form-sign" method="POST" enctype="multipart/form-data" name="update_profile_form">
                     <small class="form-text text-center" style="color:green">{{update_messages['success']}}</small>
-                    <div class="card-body media align-items-center">
-                        <img src="{{ url_for('static', filename='img/pp.jpg')}}" class="d-block ui-w-80">
-                        <div class="media-body ml-4">
-                            <label class="btn btn-outline-primary">
-                            Upload new photo
-                            <input type="file" class="account-settings-fileinput">
-                            </label> &nbsp;
-                            <button type="button" class="btn btn-default md-btn-flat">Reset</button>
-                            <div class="text-light small mt-1">Allowed JPG, GIF or PNG. Max size of 800K</div>
+                    <div class="form-group">
+                        <div class="row">
+                          <div class="input-group col-md-9 my-auto">
+                            <div class="input-group-btn">
+                              <div class="fileUpload btn fake-shadow" style="color:white;background-color: indigo;">
+                                <span><i class="glyphicon glyphicon-upload"></i>Choose Profile Image</span>
+                                <input type="file" name="user_img" class="form-control-file" id="logo-id">
+                              </div>
+                            </div>
+                            <input id="fakeUploadLogo" class="form-control fake-shadow" placeholder="{% if show_user.img != None %}{{show_user.img['img_name']}}{% else %}Choose Image: 'png', 'jpg', 'jpeg'{% endif %}" disabled="disabled">
+                            <input type="hidden" id="img_name" name="img_name" value="initial"> 
+                            <button type="button" onclick="reset_img()" class="btn btn-outline-danger">Reset</button>
+                          </div>
+                          <div class="col-md-3 text-center">
+                            <img class="thumbnail img-preview" id="ppimage" src="{% if show_user.img != None %}data:;base64,{{show_user.img['img']}}{% else %}{{ url_for('static', filename='img/pp.jpg')}}{% endif %}">
+                            <small class="form-text text-center" style="color:red">{{update_messages['file']}}</small>
+                          </div>
                         </div>
                     </div>
-                    <hr class="border-light m-0">
-                    <div class="card-body">
+                    <div class="form-group">
                         <div class="form-label-group">
-                            <input type="text" id="inputName" name="inputName" class="form-control" placeholder="Name" value="{% if show_user.user_name != None %} {{show_user.user_name}} {% endif %}">
+                            <input type="text" id="inputName" name="inputName" class="form-control" placeholder="Name" value="{% if show_user.user_name != None %}{{show_user.user_name}}{% endif %}">
                             <label for="inputName">Name</label>
                         </div>
                         <div class="form-group">
@@ -58,13 +76,12 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label">About me</label>
-                            <textarea class="form-control" rows="2" name="about_me">{% if show_user.about_me != None %} {{show_user.about_me}} {% endif %}</textarea>
+                            <textarea class="form-control" rows="2" name="about_me">{% if show_user.about_me != None %}{{show_user.about_me}}{% endif %}</textarea>
                         </div>
                         <div class="text-right">
                             <button id="updatebtn" class="btn btn-lg" style="color:white;background-color: indigo;" type="submit">Update Profile</button>
                         </div>
                     </div>
-                    
                 </form>
                 </div>
                 </div>
