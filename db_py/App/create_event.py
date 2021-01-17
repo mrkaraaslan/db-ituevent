@@ -1,3 +1,6 @@
 
 
-#def controller(name, date, time):
+def controller():
+    l = {}
+
+    return l

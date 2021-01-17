@@ -12,7 +12,7 @@
           <div class="row justify-content-center">
             <div class="col-lg-3 order-lg-2">
               <div class="card-profile-image">
-                <img src="{% if show_user.img != None %}data:;base64,{{show_user.img['img']}}{% else %}{{ url_for('static', filename='img/pp.jpg')}}{% endif %}">
+                <img src="{% if show_user.img != None %}data:;base64,{{show_user.img}}{% else %}{{ url_for('static', filename='img/pp.jpg')}}{% endif %}">
               </div>
             </div>
           </div>

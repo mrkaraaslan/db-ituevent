@@ -91,9 +91,9 @@ def upload_update_img(email, user_img, dsn):
 
 
     command_img =  "SELECT EXISTS(SELECT 1 FROM user_img WHERE email=%s)"
-    command_insert = "INSERT INTO user_img(email, img_name, img) VALUES(%s, %s, %s)"
+    command_insert = "INSERT INTO user_img(email, img) VALUES(%s, %s)"
     command_delete = "DELETE FROM user_img WHERE email=%s"
-    command_update = "UPDATE user_img SET img_name=%s, img=%s WHERE email=%s"
+    command_update = "UPDATE user_img SET img=%s WHERE email=%s"
 
     connection = None
     try:
@@ -107,13 +107,13 @@ def upload_update_img(email, user_img, dsn):
 
         if new_img_exists and img_exists:
             print("update")
-            curr.execute(command_update, (user_img.filename, user_img.read(), email,)) #update img
+            curr.execute(command_update, (user_img.read(), email,)) #update img
         elif img_exists:
             print("delete")
             curr.execute(command_delete, (email,)) #delete row
         elif new_img_exists:
             print("insert")
-            curr.execute(command_insert, (email, user_img.filename, user_img.read(),)) #insert row
+            curr.execute(command_insert, (email, user_img.read(),)) #insert row
         else:
             print("nothing")
         

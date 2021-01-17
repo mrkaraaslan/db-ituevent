@@ -83,7 +83,7 @@ def settings_page():
 
     if request.method == "POST":
         img_name = request.form["img_name"]
-        if img_name != "Choose Image: 'png', 'jpg', 'jpeg'":
+        if img_name != "initial":
             user_img = request.files["user_img"]
             up = upload_update_img(email, user_img, params)
         if len(up) == 0:

@@ -39,12 +39,12 @@
                                 <input type="file" name="user_img" class="form-control-file" id="logo-id">
                               </div>
                             </div>
-                            <input id="fakeUploadLogo" class="form-control fake-shadow" placeholder="{% if show_user.img != None %}{{show_user.img['img_name']}}{% else %}Choose Image: 'png', 'jpg', 'jpeg'{% endif %}" disabled="disabled">
+                            <input id="fakeUploadLogo" class="form-control fake-shadow" placeholder="Choose Image: 'png', 'jpg', 'jpeg'" disabled="disabled">
                             <input type="hidden" id="img_name" name="img_name" value="initial"> 
                             <button type="button" onclick="reset_img()" class="btn btn-outline-danger">Reset</button>
                           </div>
                           <div class="col-md-3 text-center">
-                            <img class="thumbnail img-preview" id="ppimage" src="{% if show_user.img != None %}data:;base64,{{show_user.img['img']}}{% else %}{{ url_for('static', filename='img/pp.jpg')}}{% endif %}">
+                            <img class="thumbnail img-preview" id="ppimage" src="{% if show_user.img != None %}data:;base64,{{show_user.img}}{% else %}{{ url_for('static', filename='img/pp.jpg')}}{% endif %}">
                             <small class="form-text text-center" style="color:red">{{update_messages['file']}}</small>
                           </div>
                         </div>
