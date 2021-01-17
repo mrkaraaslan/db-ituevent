@@ -6,9 +6,9 @@
 <script src="{{ url_for('static', filename='js/create_event.js')}}"></script>
 <script>
   var reset_img = function(){
-      document.getElementById('logo-id').value = null;
+      document.getElementById('logo-id').value = "";
       document.getElementById('ppimage').src="{{ url_for('static', filename='img/ituevent.png')}}";
-      document.getElementById('fakeUploadLogo').value = "Choose Image";
+      document.getElementById('fakeUploadLogo').value = "Choose Image: 'png', 'jpg', 'jpeg'";
   }
 </script>
 {% endblock %}
@@ -20,21 +20,23 @@
         <div class="card shadow">
           <div class="container mt-3">
             <h2>Create Event</h2>
-            <form class="form-sign" method="POST", name="create_event_form">
+            <form class="form-sign" method="POST" enctype="multipart/form-data" name="create_event_form">
+              <small class="form-text text-center" style="color:green">{{message_list['success']}}</small>
               <div class="form-group">
                 <div class="row">
                   <div class="input-group col-md-9 my-auto">
                     <div class="input-group-btn">
                       <div class="fileUpload btn fake-shadow" style="color:white;background-color: indigo;">
                         <span><i class="glyphicon glyphicon-upload"></i>Choose Event Image</span>
-                        <input type="file" class="form-control-file" id="logo-id">
+                        <input type="file" name="event_img" class="form-control-file" id="logo-id">
                       </div>
                     </div>
-                    <input id="fakeUploadLogo" class="form-control fake-shadow" placeholder="Choose Image" disabled="disabled">
+                    <input id="fakeUploadLogo" class="form-control fake-shadow" placeholder="Choose Image: 'png', 'jpg', 'jpeg'" disabled="disabled">
                     <button type="button" onclick="reset_img()" class="btn btn-outline-danger">Reset</button>
                   </div>
                   <div class="col-md-3 text-center">
                     <img class="thumbnail img-preview" id="ppimage" src="{{ url_for('static', filename='img/ituevent.png')}}">
+                    <small class="form-text" style="color:red">{{message_list['file']}}</small>
                   </div>
                 </div>
               </div>
@@ -42,6 +44,7 @@
               <div class="form-label-group">
                 <input type="text" id="name" name="name" class="form-control" required placeholder="Event Name">
                 <label for="name">Event Name</label>
+                <small class="form-text" style="color:red">{{message_list['name']}}</small>
               </div>
               <div class="form-label-group">
                 <input type="text" id="talker" name="talker" class="form-control" placeholder="Talker">
@@ -50,20 +53,24 @@
               <div class="form-label-group">
                 <input type="date" id="date" name="date" class="form-control" required placeholder="Date">
                 <label for="date">Date</label>
+                <small class="form-text" style="color:red">{{message_list['date']}}</small>
               </div>
               <div class="form-label-group">
                 <input type="time" id="time" name="time" class="form-control" required placeholder="Time">
                 <label for="time">Time</label>
+                <small class="form-text" style="color:red">{{message_list['time']}}</small>
               </div>
               <div class="form-label-group">
-                <input type="number" id="maxparticipants" name="maxparticipants" class="form-control" min="1" placeholder="Max Participants">
-                <label for="maxparticipants">Max Participants</label>
-                <small id="emailHelp" class="form-text text-muted">Leave blank if there is no participant limit.</small>
+                <input type="number" id="max_participants" name="max_participants" class="form-control" min="1" placeholder="Max Participants">
+                <label for="max_participants">Max Participants</label>
+                <small class="form-text text-muted">Leave blank if there is no participant limit.</small>
+                <small class="form-text" style="color:red">{{message_list['max_participants']}}</small>
               </div>
               <div class="form-label-group">
                 <input type="number" id="price" name="price" class="form-control" min="1" placeholder="Price">
                 <label for="price">Price ₺</label>
-                <small id="emailHelp" class="form-text text-muted">Leave blank for free events.</small>
+                <small class="form-text text-muted">Leave blank for free events.</small>
+                <small class="form-text" style="color:red">{{message_list['price']}}</small>
               </div>
               <div class="form-label-group">
                 <input type="text" id="address" name="address" class="form-control" placeholder="Address">
@@ -75,6 +82,8 @@
               </div>
               <button class="btn btn-lg btn-block" style="color:white;background-color: indigo;"type="submit">Create Event</button>
             </form>
+            <small class="form-text" style="color:red">{{message_list['err']}}</small>
+            <small class="form-text" style="color:red">{{message_list['db_message']}}</small>
           </div>
         </div>
       </div>

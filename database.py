@@ -1,4 +1,4 @@
-from event import Event
+from db_py.event import Event
 
 class Database:
     def __init__(self):

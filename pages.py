@@ -1,13 +1,14 @@
 from flask import render_template, request, redirect, url_for, flash, current_app
 from flask_login import login_user, logout_user, login_required, current_user
-from datetime import datetime
 
 from db_py.config import config
+from db_py.event import Event
 from db_py.user import get_user
 from db_py.Sign import sign_in, sign_up
 from db_py.App.profile import ShowUser
 from db_py.App import settings_password
 from db_py.App.settings import get_levels, get_departments, update_profile, upload_update_img
+from db_py.App import create_event
 
 
 #sign pages
@@ -124,39 +125,31 @@ def my_events_page():
 
 @login_required
 def create_event_page():
+    l = {}
     if request.method == "POST":
-        return render_template("App/create_event.html")
-        #name = request.form["name"]
-        #talker = request.form["talker"]
-        #date = request.form["date"]
-        #time = request.form["time"]
-        #maxparticipants = request.form["maxparticipants"]
-        #price = request.form["price"]
-        #address = request.form["address"]
-        #description = request.form["description"]"""
+        email = current_user.email
+        params = config()
+        f = request.form
 
-    return render_template("App/create_event.html")
-"""
-event_name = request.form["name"]
-    event_talker = request.form["talker"]
-    event_create_date = datetime.now()
-    event_date = request.form["date"]
-    event_time = request.form["time"]
-    event_max_participants = request.form["maxparticipants"]
-    event_price = request.form["price"]
-    event_address = request.form["address"]
-    event_ = request.form[""]
+        try: 
+            max_participants = int(f["max_participants"])
+        except:
+            max_participants = None
+            
+        try:
+            price = int(f["price"])
+        except:
+            price = None
+        
+        new_event = {
+            "creator_email": email, "img": request.files["event_img"], "name":f["name"], "talker":f["talker"], "date":f["date"], 
+            "time":f["time"], "max_participants":max_participants, "price":price, 
+            "address":f["address"], "description":f["description"]
+        }
+        
+        l = create_event.controller(new_event)
 
+        if len(l) == 0:
+            l = create_event.create_event(new_event, params)
 
-    self.creator_email = ""
-    self.id = ""
-    self.name = ""
-    self.talker = ""
-    self.create_date = datetime.now()
-    self.date = datetime.date()
-    self.time = datetime.time()
-    self.max_participants = 0
-    self.price = 0
-    self.address = ""
-    self.description = ""
-"""
+    return render_template("App/create_event.html", message_list = l)

@@ -3,7 +3,7 @@ from flask_login import LoginManager, current_user
 
 import pages
 from database import Database
-from event import Event
+from db_py.event import Event
 
 from db_py.user import get_user
 from db_py.config import config
