@@ -5,24 +5,70 @@
 {% block title %}My Events{% endblock %}
 {% block content %}
   <div class="container mt-5">
-    <div class="row">
-      <div class="col-md-10 m-auto order-xl-2 mb-5 mb-xl-0">
+    <div>
+      <div class="m-auto order-xl-2 mb-5 mb-xl-0">
         <div class="card shadow">
           <div class="container mt-3">
+            
             <form>
               <div class="form-group row">
                 <div class="col-sm-10">
-                  <input class="form-control" type="text" placeholder="Event name..." aria-label="Search">
+                  <input class="form-control" type="text" placeholder="Event name... coming soon" aria-label="Search">
                 </div>
                 <div class="col-sm-2">
-                  <button class="btn btn-success" type="submit">Search</button>
+                  <button class="btn btn-success btn-block" type="submit">Search</button>
                 </div>
               </div>
             </form>
 
+            <div class="text-center">
+              <small class="form-text" style="color:red">{{message_list['err']}}</small>
+              <small class="form-text" style="color:red">{{message_list['db_message']}}</small>
+            </div>
 
-
-
+            <div class="row mb-4 d-flex align-items-center justify-content-center">
+              {% for e in event_list %}
+              <div class="col-md-6">
+                <div class="row border m-1 mt-3 d-flex align-items-center justify-content-center" style="border-color: indigo !important; border-radius: 10px; padding-top: 0.2cm; padding-bottom: 0.2cm; min-height:333px;">
+                  <div class="col-md-5 d-flex align-items-center justify-content-center">
+                    <img style="max-width: 100%; max-height: 333px;" src="{% if e['img'] != None %}data:;base64,{{e['img']}}{% else %}{{ url_for('static', filename='img/ituevent.png')}}{% endif %}">
+                  </div>
+                  <div class="col-md-7">
+                    <p class="h3 text-center text-center">{{e['name']}}</p>
+                    <hr style="margin: 0px !important;">
+                    <div class="align-middle m-1">
+                      <img style="width: 33px; margin-right:0.3cm;" src="{{url_for('static', filename='img/icons/talker.png')}}">
+                      {% if e['talker'] != '' %}{{e['talker']}}{% else %}No talker{% endif %}
+                    </div>
+                    <hr style="margin: 0px !important;">
+                    <div class="align-middle m-1">
+                      <img style="width: 33px; margin-right:0.3cm;" src="{{url_for('static', filename='img/icons/date.png')}}">
+                      {{e['start_date']}}
+                    </div>
+                    <hr style="margin: 0px !important;">
+                    <div class="align-middle m-1">
+                      <img style="width: 33px; margin-right:0.3cm;" src="{{url_for('static', filename='img/icons/time.png')}}">
+                      {{e['start_time']}}
+                    </div>
+                    <hr style="margin: 0px !important;">
+                    <div class="align-middle m-1">
+                      <img style="width: 33px; margin-right:0.3cm;" src="{{url_for('static', filename='img/icons/m_p.png')}}">
+                      {% if e['max_participants'] != None %}{{e['max_participants']}}{% else %}No limit.{% endif %}
+                    </div>
+                    <hr style="margin: 0px !important;">
+                    <div class="align-middle m-1">
+                      <img style="width: 33px; margin-right:0.3cm;" src="{{url_for('static', filename='img/icons/price.png')}}">
+                      {% if e['price'] != None %}{{e['price']}}{% else %}Free Event{% endif %}
+                    </div>
+                    <hr style="margin: 0px !important;">
+                    <div class="m-1 float-right">
+                      <a href="{{url_for('my_events_edit_page', event_id = e['id'])}}" class="btn btn-sm" style="color:white; background-color: indigo;" role="button">Edit</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
           </div>
         </div>
       </div>

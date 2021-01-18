@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, flash, current_app
+from flask import render_template, request, redirect, url_for, flash, current_app, abort
 from flask_login import login_user, logout_user, login_required, current_user
 
 from db_py.config import config
@@ -9,7 +9,8 @@ from db_py.App.profile import ShowUser
 from db_py.App import settings_password
 from db_py.App.settings import get_levels, get_departments, update_profile, upload_update_img
 from db_py.App import create_event
-
+from db_py.App.my_events import get_my_events
+from db_py.App.my_events_edit import update_event, update_event_img, get_event, controller_before_update
 
 #sign pages
 def sign_up_page():
@@ -120,10 +121,6 @@ def settings_password_page():
     return render_template("App/settings_password.html", message_list = l)
 
 @login_required
-def my_events_page():
-    return render_template("App/my_events.html")
-
-@login_required
 def create_event_page():
     l = {}
     if request.method == "POST":
@@ -153,3 +150,52 @@ def create_event_page():
             l = create_event.create_event(new_event, params)
 
     return render_template("App/create_event.html", message_list = l)
+
+@login_required
+def my_events_page():
+    email = current_user.email
+    params = config()
+    l, event_list = get_my_events(email, params)
+    if len(l) != 0:
+        event_list = []
+    return render_template("App/my_events.html", message_list = l, event_list = event_list)
+
+@login_required
+def my_events_edit_page(event_id):
+    l = {}
+    up = {}
+    email = current_user.email
+    params = config()
+    if request.method == "POST":
+        img_name = request.form["img_name"]
+        event_img = request.files["event_img"]
+        f = request.form
+
+        try: 
+            max_participants = int(f["max_participants"])
+        except:
+            max_participants = None
+            
+        try:
+            price = int(f["price"])
+        except:
+            price = None
+        
+        updated_event = {
+            "id":event_id, "name":f["name"], "talker":f["talker"], "date":f["date"], 
+            "time":f["time"], "max_participants":max_participants, "price":price, 
+            "address":f["address"], "description":f["description"]
+        }
+
+        up = controller_before_update(updated_event)
+        if len(up) == 0:
+            if img_name != "initial":
+                up = update_event_img(event_id, event_img, params)
+            if len(up) == 0:
+                up = update_event(email, updated_event, params)
+
+    l, event = get_event(email, event_id, params)
+    if "abort" in l:
+        abort(404)
+
+    return render_template("App/my_events_edit.html", e = event, message_list = l, update_messages = up)
