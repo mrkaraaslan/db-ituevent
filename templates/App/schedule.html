@@ -2,7 +2,7 @@
 {% block style %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/argon.css')}}"/>
 {% endblock %}
-{% block title %}Search Events{% endblock %}
+{% block title %}Schedule{% endblock %}
 {% block content %}
   <div class="container mt-5">
     <div>
@@ -64,11 +64,6 @@
                       <a href="{{url_for('event_details_page', event_id = e['id'])}}" class="btn btn-sm" style="color:white; background-color: indigo;" role="button">Details</a>
                     </div>
                   </div>
-                  {% if e['attended'] %}
-                  <div class="col-12 text-center">
-                    <p style="color: green;">This event is already in your schedule.</p>
-                  </div>
-                  {% endif %}
                 </div>
               </div>
               {% endfor %}

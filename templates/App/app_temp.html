@@ -21,8 +21,8 @@
             <li class="nav-item {% if request.path==url_for('search_events_page') %} active {% endif %}">
               <a class="nav-link" href="{{ url_for('search_events_page') }}">Search Event</a>
             </li>
-            <li class="nav-item {% if request.path==url_for('attended_events_page') %} active {% endif %}">
-              <a class="nav-link" href="{{ url_for('attended_events_page') }}">Schedule</a>
+            <li class="nav-item {% if request.path==url_for('schedule_page') %} active {% endif %}">
+              <a class="nav-link" href="{{ url_for('schedule_page') }}">Schedule</a>
             </li>
             <li class="nav-item {% if request.path==url_for('my_events_page') %} active {% endif %}">
               <a class="nav-link" href="{{ url_for('my_events_page') }}">My Events</a>

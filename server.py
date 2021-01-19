@@ -28,7 +28,7 @@ def create_app():
     app.add_url_rule("/logout", view_func=pages.logout_page)
 
     app.add_url_rule("/", view_func=pages.search_events_page)
-    app.add_url_rule("/attended_events", view_func=pages.attended_events_page)
+    app.add_url_rule("/schedule", view_func=pages.schedule_page)
     app.add_url_rule("/profile", defaults={'email': None }, view_func=pages.profile_page)
     app.add_url_rule("/profile/<string:email>", view_func=pages.profile_page)
     app.add_url_rule("/settings", view_func=pages.settings_page, methods=["GET","POST"])

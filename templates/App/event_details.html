@@ -91,12 +91,12 @@
                 </tr>
                 <tr>
                   <td colspan="2">
-                    <a href="{{url_for('profile_page', email = e['creator_email'])}}" class="btn btn-sm float-left" style="color:white; background-color: indigo;" role="button">Visit profile</a>
+                    <a href="{{url_for('profile_page', email = e['creator_email'])}}" class="btn btn-sm" style="color:white; background-color: indigo;" role="button">Visit profile</a>
                     <form method="POST">
                       {% if e['attended'] == True %}
-                        <button class="btn btn-sm float-right" style="color:white;background-color: red;" type="submit" name="add_remove" value="remove">Remove from schedule</button>
+                        <button class="btn btn-sm" style="color:white;background-color: red;" type="submit" name="add_remove" value="remove">Remove from schedule</button>
                       {% else %}
-                        <button class="btn btn-sm float-right" style="color:white;background-color: green;" type="submit" name="add_remove" value="add">Add to schedule</button>
+                        <button class="btn btn-sm" style="color:white;background-color: green;" type="submit" name="add_remove" value="add">Add to schedule</button>
                       {% endif %}
                     </form>
                   </td>

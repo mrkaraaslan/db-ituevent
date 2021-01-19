@@ -7,8 +7,7 @@ def get_event(email, event_id, dsn):
     s_event = {}
     command_event = "SELECT EXISTS(SELECT 1 FROM event WHERE creator_email=%s AND id=%s)"
     command_data = "SELECT name, talker, start_date, start_time, max_participants, price, address, description, img FROM event LEFT JOIN event_img ON event.id=event_img.event_id WHERE creator_email=%s AND id=%s"
-    #command_data = "SELECT * FROM event LEFT JOIN event_img ON event.id=event_img.event_id WHERE creator_email=%s AND event_id=%s"
-
+    
     connection = None
     try:
         connection = db_event.connect(**dsn)

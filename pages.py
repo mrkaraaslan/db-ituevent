@@ -13,6 +13,7 @@ from db_py.App.my_events import get_my_events
 from db_py.App.my_events_edit import update_event, update_event_img, get_event, controller_before_update
 from db_py.App.search_event import search_events, get_attended_ids
 from db_py.App.event_details import get_event_details, add_to_schedule, remove_from_schedule
+from db_py.App.schedule import get_schedule
 
 #sign pages
 def sign_up_page():
@@ -80,8 +81,15 @@ def search_events_page():
     return render_template("App/search_events.html", message_list = l, event_list = event_list)
 
 @login_required
-def attended_events_page():
-    return render_template("App/attended_events.html")
+def schedule_page():
+    l = {}
+    event_list = []
+    email = current_user.email
+    params = config()
+    l, event_list = get_schedule(email, params)
+    if len(l) != 0:
+        event_list.clear()
+    return render_template("App/schedule.html", message_list = l, event_list = event_list)
 
 @login_required
 def profile_page(email):
