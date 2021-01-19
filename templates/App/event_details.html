@@ -29,6 +29,7 @@
           </div>-->
           <div class="card-body pt-0 pt-md-4 mt-5">
             <div class="mt-5">
+              <small class="form-text text-center" style="color:green">{{update_messages['success']}}</small>
               <table class="center">
                 <tr>
                   <th colspan="2">
@@ -91,14 +92,18 @@
                 <tr>
                   <td colspan="2">
                     <a href="{{url_for('profile_page', email = e['creator_email'])}}" class="btn btn-sm float-left" style="color:white; background-color: indigo;" role="button">Visit profile</a>
-                    {% if e['attended'] %}
-                      <a action="remove" class="btn btn-sm float-right" style="color:white; background-color: red;" role="button">Remove from schedule</a>
-                    {% else %}
-                    <a action="add" class="btn btn-sm float-right" style="color:white; background-color: green;" role="button">Add schedule</a>
-                    {% endif %}
+                    <form method="POST">
+                      {% if e['attended'] == True %}
+                        <button class="btn btn-sm float-right" style="color:white;background-color: red;" type="submit" name="add_remove" value="remove">Remove from schedule</button>
+                      {% else %}
+                        <button class="btn btn-sm float-right" style="color:white;background-color: green;" type="submit" name="add_remove" value="add">Add to schedule</button>
+                      {% endif %}
+                    </form>
                   </td>
                 </tr>
               </table>
+              <small class="form-text" style="color:red">{{message_list['err']}}</small>
+              <small class="form-text" style="color:red">{{message_list['db_message']}}</small>
             </div>
           </div>
         </div>

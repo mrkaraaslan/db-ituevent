@@ -29,7 +29,7 @@ def get_event_details(event_id, dsn):
         
         curr.close()
     except (Exception, db_event.DatabaseError) as error:
-        l["err"] = "Get Event Error"
+        l["err"] = "get_event_details Error"
         l["db_message"] = error
         print(error)
     finally:
@@ -37,3 +37,45 @@ def get_event_details(event_id, dsn):
             connection.close()
     
     return l, s_event
+
+def add_to_schedule(email, event_id, dsn):
+    l = {}
+    command = "INSERT INTO attendence(email, event_id) VALUES(%s, %s)"
+    connection = None
+    try:
+        connection = db_event.connect(**dsn)
+        curr = connection.cursor()
+        curr.execute(command, (email, event_id,))
+        curr.close()
+        connection.commit()
+        l['success'] = "Successfull added to Schedule"
+    except (Exception, db_event.DatabaseError) as error:
+        l["err"] = "add_to_schedule Error"
+        l["db_message"] = error
+        print(error)
+    finally:
+        if connection is not None:
+            connection.close()
+    
+    return l
+
+def remove_from_schedule(email, event_id, dsn):
+    l = {}
+    command = "DELETE FROM attendence WHERE email=%s AND event_id=%s"
+    connection = None
+    try:
+        connection = db_event.connect(**dsn)
+        curr = connection.cursor()
+        curr.execute(command, (email, event_id,))
+        curr.close()
+        connection.commit()
+        l['success'] = "Successfull removed from Schedule"
+    except (Exception, db_event.DatabaseError) as error:
+        l["err"] = "remove_from_schedule Error"
+        l["db_message"] = error
+        print(error)
+    finally:
+        if connection is not None:
+            connection.close()
+    
+    return l

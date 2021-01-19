@@ -12,7 +12,7 @@ from db_py.App import create_event
 from db_py.App.my_events import get_my_events
 from db_py.App.my_events_edit import update_event, update_event_img, get_event, controller_before_update
 from db_py.App.search_event import search_events, get_attended_ids
-from db_py.App.event_details import get_event_details
+from db_py.App.event_details import get_event_details, add_to_schedule, remove_from_schedule
 
 #sign pages
 def sign_up_page():
@@ -218,13 +218,29 @@ def my_events_edit_page(event_id):
 @login_required
 def event_details_page(event_id):
     l = {}
+    up = {}
     event = {}
+    email = current_user.email
     params = config()
 
+    if request.method == "POST":
+        if request.form["add_remove"] == "add":
+            up = add_to_schedule(email, event_id, params)
+        elif request.form["add_remove"] == "remove":
+            up = remove_from_schedule(email, event_id, params)
+        else:
+            print("none")
+
+    
     l, event = get_event_details(event_id, params)
     if "abort" in l:
         abort(404)
     elif event['creator_email'] == current_user.email:
         return redirect(url_for('my_events_edit_page', event_id = event_id))
     
-    return render_template("App/event_details.html", message_list = l, e = event)
+    if len(l) == 0:
+        l, attended_ids = get_attended_ids(email, params)
+        if event_id in attended_ids:
+            event["attended"] = True
+    
+    return render_template("App/event_details.html", message_list = l, e = event, update_messages = up)
