@@ -127,3 +127,24 @@ def update_event(email, e, dsn):
             connection.close()
     
     return l
+
+def delete_event(email, event_id, dsn):
+    l = {}
+
+    command = "DELETE FROM event WHERE creator_email=%s AND id=%s"
+
+    connection = None
+    try:
+        connection = db_event.connect(**dsn)
+        curr = connection.cursor()
+        curr.execute(command, (email, event_id))
+        curr.close()
+        connection.commit()
+    except (Exception, db_event.DatabaseError) as error:
+        l["err"] = "Update Event Error"
+        l["db_message"] = error
+    finally:
+        if connection is not None:
+            connection.close()
+    
+    return l

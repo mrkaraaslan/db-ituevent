@@ -24,6 +24,9 @@
             <div class="text-center">
               <small class="form-text" style="color:red">{{message_list['err']}}</small>
               <small class="form-text" style="color:red">{{message_list['db_message']}}</small>
+              {% for message in get_flashed_messages() %}
+                <small class="form-text text-center" style="color:green">{{message}}</small>
+              {% endfor %}
             </div>
 
             <div class="row mb-4 d-flex align-items-center justify-content-center">

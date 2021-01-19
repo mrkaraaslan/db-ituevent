@@ -86,7 +86,14 @@
                 <label for="description">Description</label>
                 <textarea class="form-control" id="description" name="description" rows="5">{{e['description']}}</textarea>
               </div>
-              <button class="btn btn-lg btn-block" style="color:white;background-color: indigo;"type="submit">Update Event</button>
+              <div class="row">
+                <div class="col-md-10 mt-1">
+                  <button class="btn btn-lg btn-block" style="color:white;background-color: indigo;" type="submit" name="update_delete" value="update">Update Event</button>
+                </div>
+                <div class="col-md-2 mt-1">
+                  <button class="btn btn-lg btn-block btn-outline-danger" type="submit" name="update_delete" value="delete" title="This action cannot be undone">Delete</button>
+                </div>
+              </div>
             </form>
           </div>
         </div>

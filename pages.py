@@ -10,7 +10,7 @@ from db_py.App import settings_password
 from db_py.App.settings import get_levels, get_departments, update_profile, upload_update_img
 from db_py.App import create_event
 from db_py.App.my_events import get_my_events
-from db_py.App.my_events_edit import update_event, update_event_img, get_event, controller_before_update
+from db_py.App.my_events_edit import update_event, update_event_img, get_event, controller_before_update, delete_event
 from db_py.App.search_event import search_events, get_attended_ids
 from db_py.App.event_details import get_event_details, add_to_schedule, remove_from_schedule
 from db_py.App.schedule import get_schedule
@@ -190,32 +190,39 @@ def my_events_edit_page(event_id):
     email = current_user.email
     params = config()
     if request.method == "POST":
-        img_name = request.form["img_name"]
-        event_img = request.files["event_img"]
-        f = request.form
+        if request.form["update_delete"] == "update":
+            img_name = request.form["img_name"]
+            event_img = request.files["event_img"]
+            f = request.form
 
-        try: 
-            max_participants = int(f["max_participants"])
-        except:
-            max_participants = None
+            try: 
+                max_participants = int(f["max_participants"])
+            except:
+                max_participants = None
+                
+            try:
+                price = int(f["price"])
+            except:
+                price = None
             
-        try:
-            price = int(f["price"])
-        except:
-            price = None
-        
-        updated_event = {
-            "id":event_id, "name":f["name"], "talker":f["talker"], "date":f["date"], 
-            "time":f["time"], "max_participants":max_participants, "price":price, 
-            "address":f["address"], "description":f["description"]
-        }
+            updated_event = {
+                "id":event_id, "name":f["name"], "talker":f["talker"], "date":f["date"], 
+                "time":f["time"], "max_participants":max_participants, "price":price, 
+                "address":f["address"], "description":f["description"]
+            }
 
-        up = controller_before_update(updated_event)
-        if len(up) == 0:
-            if img_name != "initial":
-                up = update_event_img(event_id, event_img, params)
+            up = controller_before_update(updated_event)
             if len(up) == 0:
-                up = update_event(email, updated_event, params)
+                if img_name != "initial":
+                    up = update_event_img(event_id, event_img, params)
+                if len(up) == 0:
+                    up = update_event(email, updated_event, params)
+
+        if request.form["update_delete"] == "delete":
+            l = delete_event(email, event_id, params)
+            if len(l) == 0:
+                flash("Succesfully deleted event.")
+                return redirect(url_for("my_events_page"))
 
     l, event = get_event(email, event_id, params)
     if "abort" in l:

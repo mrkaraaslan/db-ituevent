@@ -33,7 +33,7 @@ def create_tables(dsn):
             email VARCHAR(255) NOT NULL UNIQUE,
             password VARCHAR(255) NOT NULL,
             PRIMARY KEY(email),
-            FOREIGN KEY(email) REFERENCES users(email)
+            FOREIGN KEY(email) REFERENCES users(email) ON DELETE CASCADE
         );
         """,
         """
@@ -41,7 +41,7 @@ def create_tables(dsn):
             email VARCHAR(255) NOT NULL UNIQUE,
             img BYTEA NOT NULL ,
             PRIMARY KEY(email),
-            FOREIGN KEY(email) REFERENCES users(email)
+            FOREIGN KEY(email) REFERENCES users(email) ON DELETE CASCADE
         );
         """,
         """
@@ -58,7 +58,7 @@ def create_tables(dsn):
             address VARCHAR(255),
             description TEXT ,
             PRIMARY KEY(id),
-            FOREIGN KEY(creator_email) REFERENCES users(email)
+            FOREIGN KEY(creator_email) REFERENCES users(email) ON DELETE CASCADE
         );
         """,
         """
@@ -66,7 +66,7 @@ def create_tables(dsn):
             event_id INT NOT NULL UNIQUE,
             img BYTEA NOT NULL,
             PRIMARY KEY(event_id),
-            FOREIGN KEY(event_id) REFERENCES event(id)
+            FOREIGN KEY(event_id) REFERENCES event(id) ON DELETE CASCADE
         );
         """,
         """
@@ -75,8 +75,8 @@ def create_tables(dsn):
             email VARCHAR(255) NOT NULL,
             event_id INT NOT NULL,
             PRIMARY KEY(id),
-            FOREIGN KEY(email) REFERENCES users(email),
-            FOREIGN KEY(event_id) REFERENCES event(id)
+            FOREIGN KEY(email) REFERENCES users(email) ON DELETE CASCADE,
+            FOREIGN KEY(event_id) REFERENCES event(id) ON DELETE CASCADE
         );
         """
     )
