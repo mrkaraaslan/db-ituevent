@@ -11,6 +11,8 @@ from db_py.App.settings import get_levels, get_departments, update_profile, uplo
 from db_py.App import create_event
 from db_py.App.my_events import get_my_events
 from db_py.App.my_events_edit import update_event, update_event_img, get_event, controller_before_update
+from db_py.App.search_event import search_events, get_attended_ids
+from db_py.App.event_details import get_event_details
 
 #sign pages
 def sign_up_page():
@@ -62,7 +64,20 @@ def logout_page():
 #app pages
 @login_required
 def search_events_page():
-    return render_template("App/search_events.html")
+    email = current_user.email
+    params = config()
+    l, event_list = search_events(email, params)
+    if len(l) == 0:
+        l, attendence_list = get_attended_ids(email, params)
+    
+    if len(l) == 0:
+        for event in event_list:
+            if event['id'] in attendence_list:
+                event['attended'] = True
+            else:
+                event['attended'] = False
+    
+    return render_template("App/search_events.html", message_list = l, event_list = event_list)
 
 @login_required
 def attended_events_page():
@@ -199,3 +214,17 @@ def my_events_edit_page(event_id):
         abort(404)
 
     return render_template("App/my_events_edit.html", e = event, message_list = l, update_messages = up)
+
+@login_required
+def event_details_page(event_id):
+    l = {}
+    event = {}
+    params = config()
+
+    l, event = get_event_details(event_id, params)
+    if "abort" in l:
+        abort(404)
+    elif event['creator_email'] == current_user.email:
+        return redirect(url_for('my_events_edit_page', event_id = event_id))
+    
+    return render_template("App/event_details.html", message_list = l, e = event)

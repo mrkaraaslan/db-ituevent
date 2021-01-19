@@ -1,0 +1,108 @@
+{% extends "App/app_temp.html" %}
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/argon.css')}}"/>
+<style>
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+{% endblock %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+  <div class="container mt-7">
+    <div class="row">
+      <div class="col-md-10 m-auto order-xl-2 mb-5 mb-xl-0">
+        <div class="card card-profile shadow">
+          <div class="row justify-content-center mb-3">
+            <div class="col-lg-3 order-lg-2">
+              <div class="card-profile-image">
+                <img src="{% if e['img'] != None %}data:;base64,{{e['img']}}{% else %}{{ url_for('static', filename='img/ituevent.png')}}{% endif %}">
+              </div>
+            </div>
+          </div><!--
+          <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+            <div class="d-flex justify-content-between">
+              <a href="#" class="btn btn-sm btn-info mr-4">Maybe ?</a>
+              <a href="#" class="btn btn-sm btn-default float-right">Maybe ?</a>
+            </div>
+          </div>-->
+          <div class="card-body pt-0 pt-md-4 mt-5">
+            <div class="mt-5">
+              <table class="center">
+                <tr>
+                  <th colspan="2">
+                    <p class="h3 text-center text-center">{{e['name']}}</p>
+                  </th>
+                </tr>
+                <tr>
+                  <td>
+                    <img style="width: 33px; margin-right:0.3cm;" src="{{url_for('static', filename='img/icons/talker.png')}}">
+                  </td>
+                  <td>
+                    {% if e['talker'] != '' %}{{e['talker']}}{% else %}No talker{% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img style="width: 33px; margin-right:0.3cm;" src="{{url_for('static', filename='img/icons/date.png')}}">
+                  </td>
+                  <td>
+                    {{e['start_date']}}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img style="width: 33px; margin-right:0.3cm;" src="{{url_for('static', filename='img/icons/time.png')}}">
+                  </td>
+                  <td>
+                    {{e['start_time']}}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img style="width: 33px; margin-right:0.3cm;" src="{{url_for('static', filename='img/icons/m_p.png')}}">
+                  </td>
+                  <td>
+                    {% if e['max_participants'] != None %}{{e['max_participants']}}{% else %}No limit.{% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img style="width: 33px; margin-right:0.3cm;" src="{{url_for('static', filename='img/icons/price.png')}}">
+                  </td>
+                  <td>
+                    {% if e['price'] != None %}{{e['price']}}{% else %}Free Event{% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img style="width: 33px; margin-right:0.3cm;" src="{{url_for('static', filename='img/icons/address.png')}}">
+                  </td>
+                  <td>
+                    {% if e['address'] != '' %}{{e['address']}}{% else %}No address given{% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    {{e['description']}}
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <a href="{{url_for('profile_page', email = e['creator_email'])}}" class="btn btn-sm float-left" style="color:white; background-color: indigo;" role="button">Visit profile</a>
+                    {% if e['attended'] %}
+                      <a action="remove" class="btn btn-sm float-right" style="color:white; background-color: red;" role="button">Remove from schedule</a>
+                    {% else %}
+                    <a action="add" class="btn btn-sm float-right" style="color:white; background-color: green;" role="button">Add schedule</a>
+                    {% endif %}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

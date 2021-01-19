@@ -36,6 +36,7 @@ def create_app():
     app.add_url_rule("/create_event", view_func=pages.create_event_page, methods=["GET","POST"])
     app.add_url_rule("/my_events", view_func=pages.my_events_page)
     app.add_url_rule("/my_events_edit/<int:event_id>", view_func=pages.my_events_edit_page, methods=["GET","POST"])
+    app.add_url_rule("/event_details/<int:event_id>", view_func=pages.event_details_page)
 
     lm.init_app(app)
     lm.login_view = "sign_in_page"
