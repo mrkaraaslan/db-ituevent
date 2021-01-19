@@ -14,6 +14,7 @@ from db_py.App.my_events_edit import update_event, update_event_img, get_event, 
 from db_py.App.search_event import search_events, get_attended_ids
 from db_py.App.event_details import get_event_details, add_to_schedule, remove_from_schedule
 from db_py.App.schedule import get_schedule
+from db_py.App.settings_delete_account import delete_account
 
 #sign pages
 def sign_up_page():
@@ -142,6 +143,22 @@ def settings_password_page():
             l = settings_password.change_password(pass1, params)
 
     return render_template("App/settings_password.html", message_list = l)
+
+@login_required
+def settings_delete_account_page():
+    l = {}
+    if request.method == "POST":
+        password = request.form["dlt_password"]
+        email = current_user.email
+        params = config()
+
+        l = delete_account(email, password, params)
+        if len(l) == 0:
+            logout_user()
+            flash("Successfully deleted your account!")
+            return redirect(url_for("sign_up_page"))
+
+    return render_template("App/settings_delete_account.html", message_list = l)
 
 @login_required
 def create_event_page():

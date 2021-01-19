@@ -33,6 +33,7 @@ def create_app():
     app.add_url_rule("/profile/<string:email>", view_func=pages.profile_page)
     app.add_url_rule("/settings", view_func=pages.settings_page, methods=["GET","POST"])
     app.add_url_rule("/settings/change_password", view_func=pages.settings_password_page, methods=["GET","POST"])
+    app.add_url_rule("/setting/delete_account", view_func=pages.settings_delete_account_page, methods=["GET","POST"])
     app.add_url_rule("/create_event", view_func=pages.create_event_page, methods=["GET","POST"])
     app.add_url_rule("/my_events", view_func=pages.my_events_page)
     app.add_url_rule("/my_events_edit/<int:event_id>", view_func=pages.my_events_edit_page, methods=["GET","POST"])

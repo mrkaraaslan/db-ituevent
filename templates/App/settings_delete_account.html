@@ -1,0 +1,56 @@
+
+{% extends "App/app_temp.html" %}
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootdey.css')}}"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/create_event.css')}}"/>
+<script>
+    var check = function(){
+        var p = document.getElementById('dlt_password').value;
+        var button = document.getElementById('dltbutton')
+
+        if(p != ""){
+            button.disabled = false;
+        }
+        else{
+            button.disabled = true;
+        }
+    }
+</script>
+{% endblock %}
+{% block title %}Delete Account{% endblock %}
+{% block content %}
+  <div class="container light-style flex-grow-1 container-p-y mt-5">
+      <div class="card overflow-hidden">
+      <div class="row no-gutters row-bordered row-border-light">
+        <div class="col-md-3 pt-0">
+          <div class="list-group list-group-flush account-settings-links">
+            <a class="list-group-item list-group-item-action" href=" {{ url_for('settings_page') }}">General</a>
+            <a class="list-group-item list-group-item-action" href=" {{ url_for('settings_password_page') }}">Change password</a>
+            <a class="list-group-item list-group-item-action text-danger active" style="color: red !important;" href="{{ url_for('settings_delete_account_page') }}">Delete Account</a>
+          </div>
+        </div>
+        <div class="col-md-9">
+          <div class="tab-content">
+            <div class="tab-pane fade active show">
+              <form class="form-sign" method="POST", name="delete_account_form">
+                <h2>Delete Account</h2>
+                <p>Deleting your account will delete everything you have including events you have created and your schedule.</p>
+                <div class="form-label-group">
+                  <input type="password" id="dlt_password" name="dlt_password" class="form-control" required placeholder="Email" onkeyup="check()">
+                  <label for="inputpassword">Your password</label>
+                  <small class="form-text" style="color:red">{{message_list['password']}}</small>
+                </div>
+                <small class="form-text" style="color:red">This action CANNOT be undone!</small>
+                <div class="text-right mt-3">
+                  <button id="dltbutton" disabled class="btn btn-lg btn-outline-danger" type="submit">Delete Account</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <small class="form-text" style="color:red">{{message_list['err']}}</small>
+      <small class="form-text" style="color:red">{{message_list['db_message']}}</small>
+  </div>
+{% endblock %}
